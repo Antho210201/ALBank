@@ -6,7 +6,7 @@ public class Client {
 
 	private String name;
 	private String firstname;
-	private int clientnumber;
+	private int clientNumber;
 
 	// Compteur statique pour générer automatiquement les numéros.
 	private static int counter = 0;
@@ -14,7 +14,7 @@ public class Client {
 	public Client(String name, String firstname) {
 		this.name = name;
 		this.firstname = firstname;
-		this.clientnumber = ++counter;
+		this.clientNumber = ++counter;
 	}
 
 	public String getName() {
@@ -34,12 +34,12 @@ public class Client {
 	}
 
 	public int getClientnumber() {
-		return clientnumber;
+		return clientNumber;
 	}
 
 	@Override
 	public String toString() {
-		return "Client numéro " + clientnumber + " : " + firstname + " " + name;
+		return "Client numéro " + clientNumber + " : " + firstname + " " + name;
 	}
 
 }
