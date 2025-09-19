@@ -5,6 +5,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
@@ -47,13 +48,17 @@ public class Main {
 	}
 
 	private static Hashtable<Integer, Account> createAccountsTable(List<Account> accounts) {
-		// TODO Auto-generated method stub
-		return null;
+		Hashtable<Integer, Account> accountsTable = new Hashtable<>();
+		for (Account acc : accounts) {
+			accountsTable.put(acc.getAccountNumber(), acc);
+		}
+		return accountsTable;
 	}
 
 	private static void displayAccountsSorted(Hashtable<Integer, Account> accountsTable) {
-		// TODO Auto-generated method stub
-
+		String result = accountsTable.values().stream().sorted(Comparator.comparingDouble(Account::getBalance))
+				.map(Account::toString).collect(Collectors.joining("\n"));
+		System.out.println(result);
 	}
 
 	public static void main(String[] args) {
