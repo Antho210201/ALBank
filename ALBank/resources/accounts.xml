@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Accounts>
+    <CurrentAccount type="Current">
+        <accountNumber>1</accountNumber>
+        <label>Compte courant</label>
+        <balance>0.0</balance>
+        <client>
+        	<firstname>Firstname1</firstname>
+            <name>Name1</name>
+        </client>
+    </CurrentAccount>
+
+    <SavingsAccount type="Savings">
+        <accountNumber>2</accountNumber>
+        <label>Compte épargne</label>
+        <balance>0.0</balance>
+        <client>
+            <firstname>Firstname1</firstname>
+            <name>Name1</name>
+        </client>
+    </SavingsAccount>
+</Accounts>

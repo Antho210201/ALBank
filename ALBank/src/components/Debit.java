@@ -8,4 +8,8 @@ public class Debit extends Flow {
 		super(comment, amount, targetAccountNumber, effect);
 	}
 
+	public Debit() {
+		super();
+	}
+
 }

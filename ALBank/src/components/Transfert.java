@@ -11,6 +11,10 @@ public class Transfert extends Flow {
 		this.issuingAccountNumber = issuingAccountNumber;
 	}
 
+	public Transfert() {
+		super();
+	}
+
 	public int getIssuingAccountNumber() {
 		return issuingAccountNumber;
 	}

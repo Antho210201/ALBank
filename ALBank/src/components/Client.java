@@ -10,11 +10,16 @@ public class Client {
 
 	// Compteur statique pour générer automatiquement les numéros.
 	private static int counter = 0;
+	private static int counterXml = 0;
 
 	public Client(String name, String firstname) {
 		this.name = name;
 		this.firstname = firstname;
 		this.clientNumber = ++counter;
+	}
+
+	public Client() {
+		this.clientNumber = ++counterXml;
 	}
 
 	public String getName() {

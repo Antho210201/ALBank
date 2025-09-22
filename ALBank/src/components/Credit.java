@@ -8,4 +8,8 @@ public class Credit extends Flow {
 		super(comment, amount, targetAccountNumber, effect);
 	}
 
+	public Credit() {
+		super();
+	}
+
 }

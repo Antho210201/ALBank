@@ -8,4 +8,8 @@ public class CurrentAccount extends Account {
 		super("Compte courant", client);
 	}
 
+	public CurrentAccount() {
+		super();
+	}
+
 }

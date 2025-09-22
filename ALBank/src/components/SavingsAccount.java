@@ -6,4 +6,8 @@ public class SavingsAccount extends Account {
 		super("Compte épargne", client);
 	}
 
+	public SavingsAccount() {
+		super();
+	}
+
 }

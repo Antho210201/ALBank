@@ -4,6 +4,16 @@ package components;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, // Jackson choisit la sous-classe grâce à "type"
+		include = JsonTypeInfo.As.PROPERTY, // "type" doit être une propriété du JSON
+		property = "type")
+@JsonSubTypes({ @JsonSubTypes.Type(value = Credit.class, name = "Credit"),
+		@JsonSubTypes.Type(value = Debit.class, name = "Debit"),
+		@JsonSubTypes.Type(value = Transfert.class, name = "Transfer") })
+
 public abstract class Flow {
 
 	private String comment;
@@ -23,6 +33,10 @@ public abstract class Flow {
 		this.targetAccountNumber = targetAccountNumber;
 		this.effect = effect;
 		this.date = LocalDate.now();
+	}
+
+	public Flow() {
+
 	}
 
 	public String getComment() {

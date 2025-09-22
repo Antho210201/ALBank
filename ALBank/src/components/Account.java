@@ -2,6 +2,16 @@
 
 package components;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, // Jackson choisit la sous-classe grâce à "type"
+		include = JsonTypeInfo.As.PROPERTY, // "type" est une propriété dans ton XML
+		property = "type")
+@JsonSubTypes({ @JsonSubTypes.Type(value = CurrentAccount.class, name = "Current"),
+		@JsonSubTypes.Type(value = SavingsAccount.class, name = "Savings") })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class Account {
 
 	protected String label;
@@ -19,6 +29,9 @@ public abstract class Account {
 		this.accountNumber = ++counter;
 	}
 
+	public Account() {
+	}
+
 	public String getLabel() {
 		return label;
 	}
@@ -33,6 +46,23 @@ public abstract class Account {
 
 	public void setBalance(double balance) {
 		this.balance = balance;
+	}
+
+	// 1.3.5 Updating accounts
+	public void setBalance(Flow flow) {
+		if (flow instanceof Credit) {
+			this.balance += flow.getAmount();
+		} else if (flow instanceof Debit) {
+			this.balance -= flow.getAmount();
+		} else if (flow instanceof Transfert) {
+			Transfert t = (Transfert) flow;
+			if (this.accountNumber == t.getIssuingAccountNumber()) {
+				this.balance -= t.getAmount();
+			} else if (this.accountNumber == t.getTargetAccountNumber()) {
+				this.balance += t.getAmount();
+			}
+		}
+
 	}
 
 	public int getAccountNumber() {
