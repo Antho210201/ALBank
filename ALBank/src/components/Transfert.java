@@ -11,6 +11,7 @@ public class Transfert extends Flow {
 		this.issuingAccountNumber = issuingAccountNumber;
 	}
 
+	// Constructeur vide pour Jackson
 	public Transfert() {
 		super();
 	}

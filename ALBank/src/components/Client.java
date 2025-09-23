@@ -10,6 +10,8 @@ public class Client {
 
 	// Compteur statique pour générer automatiquement les numéros.
 	private static int counter = 0;
+	// Compteur statique pour générer automatiquement les numéros (pour le fichier
+	// XML).
 	private static int counterXml = 0;
 
 	public Client(String name, String firstname) {
@@ -18,6 +20,8 @@ public class Client {
 		this.clientNumber = ++counter;
 	}
 
+	// Constructeur vide pour Jackson (on incrémente juste avec un compteur à part
+	// pour avoir un numéro de client convenable)
 	public Client() {
 		this.clientNumber = ++counterXml;
 	}

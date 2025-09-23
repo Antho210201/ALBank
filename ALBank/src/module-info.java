@@ -4,6 +4,7 @@
 /**
  * 
  */
+// Ajout de "open" pour garantir un accès à Jackson
 open module ALBank {
 	requires com.fasterxml.jackson.databind;
 	requires java.xml;

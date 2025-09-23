@@ -8,6 +8,7 @@ public class CurrentAccount extends Account {
 		super("Compte courant", client);
 	}
 
+	// Constructeur vide pour Jackson
 	public CurrentAccount() {
 		super();
 	}

@@ -6,6 +6,7 @@ public class SavingsAccount extends Account {
 		super("Compte épargne", client);
 	}
 
+	// Constructeur vide pour Jackson
 	public SavingsAccount() {
 		super();
 	}

@@ -8,6 +8,7 @@ public class Credit extends Flow {
 		super(comment, amount, targetAccountNumber, effect);
 	}
 
+	// Constructeur vide pour Jackson
 	public Credit() {
 		super();
 	}

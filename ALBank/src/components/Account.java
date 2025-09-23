@@ -6,12 +6,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, // Jackson choisit la sous-classe grâce à "type"
-		include = JsonTypeInfo.As.PROPERTY, // "type" est une propriété dans ton XML
-		property = "type")
+// JsonTypeInfo indique à Jackson où chercher l'info du type (ici dans la propriété "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+
+// JsonSubTypes fait le mapping entre la valeur de "type" et les sous-classes concrètes
 @JsonSubTypes({ @JsonSubTypes.Type(value = CurrentAccount.class, name = "Current"),
 		@JsonSubTypes.Type(value = SavingsAccount.class, name = "Savings") })
+
+// Permet d'éviter les erreurs si le XML a plus de champs que la classe Java
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public abstract class Account {
 
 	protected String label;
@@ -29,6 +33,7 @@ public abstract class Account {
 		this.accountNumber = ++counter;
 	}
 
+	// Constructeur vide pour Jackson
 	public Account() {
 	}
 

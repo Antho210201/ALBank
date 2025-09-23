@@ -8,6 +8,7 @@ public class Debit extends Flow {
 		super(comment, amount, targetAccountNumber, effect);
 	}
 
+	// Constructeur vide pour Jackson
 	public Debit() {
 		super();
 	}

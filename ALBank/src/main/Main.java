@@ -79,19 +79,24 @@ public class Main {
 	// 1.3.4 Creation of the flow array
 	private static List<Flow> generateFlows(List<Account> accounts) {
 		List<Flow> flows = new ArrayList<>();
+		// Un minimum de 2 comptes est nécessaire pour les transferts
 		if (accounts.size() < 2) {
 			System.out.println("Pas assez de comptes !!!");
 			return flows;
 		}
+		// Débit de 50€ du compte numéro 1
 		flows.add(new Debit("Achat", 50, 1, true));
+		// Crédit de 100.50€ pour tous les comptes courants du tableau
 		accounts.stream().filter(acc -> acc instanceof CurrentAccount)
 				.forEach(acc -> flows.add(new Credit("Prime", 100.50, acc.getAccountNumber(), true)));
+		// Crédit de 1500€ pour tous les comptes épargne du tableau
 		accounts.stream().filter(acc -> acc instanceof SavingsAccount)
 				.forEach(acc -> flows.add(new Credit("Salaire", 1500, acc.getAccountNumber(), true)));
+		// Transfert de 50€ du compte numéro 1 au compte numéro 2
 		flows.add(new Transfert("Virement", 50, 2, true, 1));
 		// flows.add(new Debit("Achat", 50, 1, true)); (Pour tester le cas où un compte
 		// se retouve en négatif)
-		flows.forEach(flow -> flow.setDate(LocalDate.now().plusDays(2)));
+		flows.forEach(flow -> flow.setDate(LocalDate.now().plusDays(2))); // Ajoute 2 jours à la date actuelle
 		return flows;
 	}
 
@@ -99,15 +104,11 @@ public class Main {
 	private static void updateAccounts(List<Flow> flows, Hashtable<Integer, Account> accountsTable) {
 		flows.forEach(flow -> {
 			Account acc = accountsTable.get(flow.getTargetAccountNumber());
-			if (acc != null) {
-				acc.setBalance(flow);
-			}
+			acc.setBalance(flow);
 			if (flow instanceof Transfert) {
 				Transfert t = (Transfert) flow;
 				Account issuingAcc = accountsTable.get(t.getIssuingAccountNumber());
-				if (issuingAcc != null) {
-					issuingAcc.setBalance(t);
-				}
+				issuingAcc.setBalance(t);
 			}
 		});
 		Predicate<Account> negativeBalance = acc -> acc.getBalance() < 0;
@@ -121,7 +122,7 @@ public class Main {
 	public static List<Flow> loadFlowsFromJson(Path path) {
 		try (InputStream is = Files.newInputStream(path)) {
 			ObjectMapper mapper = new ObjectMapper();
-			mapper.registerModule(new JavaTimeModule()); // ✅ gestion des LocalDate
+			mapper.registerModule(new JavaTimeModule()); // Gestion des LocalDate
 
 			Flow[] flows = mapper.readValue(is, Flow[].class);
 			return Arrays.asList(flows);
@@ -137,7 +138,7 @@ public class Main {
 		try (InputStream is = Files.newInputStream(path)) {
 			XmlMapper xmlMapper = new XmlMapper();
 
-			// lecture en tableau (polymorphisme activé via @JsonTypeInfo)
+			// Lecture en tableau (polymorphisme activé via @JsonTypeInfo)
 			Account[] accounts = xmlMapper.readValue(is, Account[].class);
 
 			return Arrays.asList(accounts);
@@ -170,7 +171,6 @@ public class Main {
 		System.out.println("\n=== Comptes triés par Balance (balances modifiées par un ensemble de flux) ===");
 		updateAccounts(flows, accountsTable);
 
-		// List<Client> clientsFile = generateClients(3);
 		Path filepathXml = Path.of("resources/accounts.xml");
 		Path filepathJson = Path.of("resources/flows.json");
 

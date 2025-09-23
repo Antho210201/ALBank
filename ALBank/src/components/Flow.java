@@ -4,15 +4,20 @@ package components;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, // Jackson choisit la sous-classe grâce à "type"
-		include = JsonTypeInfo.As.PROPERTY, // "type" doit être une propriété du JSON
-		property = "type")
+//JsonTypeInfo indique à Jackson où chercher l'info du type (ici dans la propriété "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+
+//JsonSubTypes fait le mapping entre la valeur de "type" et les sous-classes concrètes
 @JsonSubTypes({ @JsonSubTypes.Type(value = Credit.class, name = "Credit"),
 		@JsonSubTypes.Type(value = Debit.class, name = "Debit"),
 		@JsonSubTypes.Type(value = Transfert.class, name = "Transfer") })
+
+//Permet d'éviter les erreurs si le XML a plus de champs que la classe Java
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public abstract class Flow {
 
@@ -35,6 +40,7 @@ public abstract class Flow {
 		this.date = LocalDate.now();
 	}
 
+	// Constructeur vide pour Jackson
 	public Flow() {
 
 	}
